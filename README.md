@@ -32,9 +32,9 @@ The scheduler follows an atomic task model with a simple, extensible API:
 ---
 
 ## Table of Contents
-* [Type Definitions](#-type-definitions)
-* [Data Structures](#-data-structures)
-* [API Reference](#-api-documentation)
+* [Type Definitions](#type-definitions)
+* [Data Structures](#data-structures)
+* [API Documentation](#api-documentation)
 
 ---
 
@@ -70,6 +70,8 @@ Opaque handle for the scheduler instance.
 struct scheduler_t;
 typedef struct scheduler scheduler_t;
 ```
+
+---
 
 ## API Documentation
 
