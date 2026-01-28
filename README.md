@@ -27,6 +27,50 @@ The scheduler follows an atomic task model with a simple, extensible API:
 | `scheduler_start()` | Enters the main execution loop. |
 | `next_task()` | Decision engine for task sequencing. Default is **Round-Robin**, but it can be overridden by the user for custom scheduling logic. |
 
+# Quick doc
+
+# Task Scheduler API Documentation
+
+This library provides a lightweight, flexible framework for task management and scheduling in embedded systems. It supports energy-aware task definitions and features a customizable scheduling logic.
+
+---
+
+## 📋 Table of Contents
+* [Type Definitions](#-type-definitions)
+* [Data Structures](#-data-structures)
+* [API Reference](#-api-reference)
+    * [Initialization](#initialization)
+    * [Task Management](#task-management)
+    * [Execution Control](#execution-control)
+
+---
+
+## 🛠 Type Definitions
+
+| Type | Definition | Description |
+| :--- | :--- | :--- |
+| `task_function_t` | `void(*)(void*)` | Function pointer for the task body. |
+| `err_t` | `uint8_t` | Error code type (0 for success, non-zero for failure). |
+| `task_handle_t` | `uint8_t` | Unique identifier for a task (index-based). |
+| `energy_level_t` | `uint8_t` | Energy requirement level (valid range: 1 to 8). |
+
+---
+
+## 🏗 Data Structures
+
+### `task_t`
+The fundamental unit of execution within the scheduler.
+
+```c
+struct task {
+    task_function_t f;      // Pointer to the function to execute
+    energy_level_t en;      // Energy level requirement {1..8}
+    void* args;             // Pointer to task arguments
+};
+
+typedef struct task task_t;
+```
+
 <!--
 ## 📚 Publication
 If you use this code for your research, please cite our IEEE SENSORS 2025 paper:
