@@ -27,25 +27,18 @@ The scheduler follows an atomic task model with a simple, extensible API:
 | `scheduler_start()` | Enters the main execution loop. |
 | `next_task()` | Decision engine for task sequencing. Default is **Round-Robin**, but it can be overridden by the user for custom scheduling logic. |
 
-# Quick doc
-
-# Task Scheduler API Documentation
-
-This library provides a lightweight, flexible framework for task management and scheduling in embedded systems. It supports energy-aware task definitions and features a customizable scheduling logic.
+# Quick doc and API Documentation
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 * [Type Definitions](#-type-definitions)
 * [Data Structures](#-data-structures)
-* [API Reference](#-api-reference)
-    * [Initialization](#initialization)
-    * [Task Management](#task-management)
-    * [Execution Control](#execution-control)
+* [API Reference](#-api-documentation)
 
 ---
 
-## 🛠 Type Definitions
+## Type Definitions
 
 | Type | Definition | Description |
 | :--- | :--- | :--- |
@@ -56,7 +49,7 @@ This library provides a lightweight, flexible framework for task management and 
 
 ---
 
-## 🏗 Data Structures
+## Data Structures
 
 ### `task_t`
 The fundamental unit of execution within the scheduler.
@@ -67,12 +60,72 @@ struct task {
     energy_level_t en;      // Energy level requirement {1..8}
     void* args;             // Pointer to task arguments
 };
-
 typedef struct task task_t;
 ```
 
+### scheduler_t
+Opaque handle for the scheduler instance.
+
+```c
+struct scheduler_t;
+typedef struct scheduler scheduler_t;
+```
+
+## API Documentation
+
+### scheduler_init
+Initializes the scheduler with a task set.
+
+```c
+/**
+ * @param tasks ptr to the array of tasks that the scheduler needs to schedule
+ * @param size number of tasks in the array
+ * @param first_id id of the first task to schedule
+ *
+ * @note the id of a task MUST be their idx in the array, any wrong size/id will 
+ * result in undefined behaviour
+ */
+void scheduler_init(task_t* tasks, uint16_t size, task_handle_t first_id);
+```
+
+### task_create
+Configures a task structure.
+
+```c
+/**
+ * @param [out] task ptr to the created task 
+ * @param fptr ptr to the task body function, the signature must be: void()(void*)
+ * @param args ptr to the arguments to pass to the function
+ * @param en energy level required by the task, en needs to be in {1..8}
+ * @return 0 if the task was create successfully else non 0 (energy out of range)
+ */
+err_t task_create(task_t* task, task_function_t fptr, void* args, energy_level_t en);
+```
+
+### next_task
+Scheduling logic (already defined as a __weak_symbol in scheduler.c as a simple round robin).
+
+```c
+/**
+ * @param id prev task id
+ * @param [out] new_id next task id
+ * @return 0 if the new_id could be generated else non 0
+ *
+ * @note this function is defined as a __weak_symbol in scheduler.c; by default it uses round robin.
+ * User can redefine it to implement custom program logic.
+ */
+err_t next_task(task_handle_t id, task_handle_t* new_id);
+```
+
+### scheduler_start
+Triggers the execution loop.
+
+```c
+void scheduler_start(void);
+```
+
 <!--
-## 📚 Publication
+## Publication
 If you use this code for your research, please cite our IEEE SENSORS 2025 paper:
 > *[Inserisci qui la citazione completa quando disponibile]*
 -->
