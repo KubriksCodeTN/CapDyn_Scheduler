@@ -12,10 +12,10 @@ The system is designed to exploit the **FRAM capabilities** of the MSP430FR MCU 
     - **Custom Linker Logic:** Specialized linker script with minimal sections for FRAM persistance.
 
 ## Project Structure
-- `scheduler/`: Core logic (`scheduler.c`, `scheduler.h`), requires (`hibernus.c`, `hibernus.h`).
+- `scheduler`: Core logic in (`scheduler.c`, `scheduler.h`), requires (`hibernus.c`, `hibernus.h`).
 - `components/`: Modular drivers for the sensors used in the IEEE Sensors 2025 demo. Driver names match the corresponding sensor hardware.
 - `main.c`: Contains the main task loop. **Note:** Peripheral pin mappings are documented directly in the source comments.
-- `linker/`: Custom linker files required for the Hibernus library integration.
+- `lnk_msp430fr5994.cmd`: Custom linker files required for the Hibernus library integration.
 
 ## Scheduler API
 The scheduler follows an atomic task model with a simple, extensible API:
