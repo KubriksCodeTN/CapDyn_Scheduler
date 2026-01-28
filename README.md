@@ -2,11 +2,11 @@
 
 This repository contains the implementation of the energy-aware scheduler presented at **IEEE SENSORS 2025**. 
 
-The system is designed to exploit the **FRAM capabilities** of the MSP430FR MCU in combination with the **CapDyn smart energy harvesting battery**, enabling robust **Intermittent Computing** through efficient state management.
+The system is designed to exploit the **FRAM capabilities** of the MSP430FR MCU in combination with the **CapDyn smart energy harvesting battery**, enabling **Intermittent Computing** through efficient state management.
 
 ## Key Features
-- **Power-Failure Resilience:** Integrated with the CapDyn smart battery interface to handle unpredictable power cycles.
-- **FRAM-Optimized:** Leveraging implemented version Hibernus for low-overhead checkpointing.
+- **Power-Failure Resilience:** Integrated with the CapDyn smart battery interface to handle power cycles.
+- **FRAM:** Implemented version Hibernus for MSP430Fr to allow low-overhead checkpointing.
 - **Lightweight Architecture:** - **Non-preemptive** execution model.
     - **Static Allocation:** Tasks are defined at compile-time for minimal memory footprint and reliability.
     - **Custom Linker Logic:** Specialized linker script with minimal sections for FRAM persistance.
